@@ -32,7 +32,6 @@ jobs:
           mkdir ../bdsim-build
           cd ../bdsim-build
           export PATH=$PATH:/tmp/root/bin/
-          yum -y install gsl-devel
           cmake ../bdsim
           make -j${{ steps.cpu-cores.outputs.count }}
 
@@ -315,7 +314,6 @@ jobs:
           mkdir ../bdsim-build
           cd ../bdsim-build
           export PATH=$PATH:/tmp/root/bin/
-          apt -y install libxxhash-dev libtbb-dev
           cmake ../bdsim
           make -j${{ steps.cpu-cores.outputs.count }}
 
@@ -351,7 +349,6 @@ jobs:
           mkdir ../bdsim-build
           cd ../bdsim-build
           export PATH=$PATH:/tmp/root/bin/
-          apt -y install libxxhash-dev libtbb-dev
           cmake ../bdsim
           make -j${{ steps.cpu-cores.outputs.count }}
 
@@ -387,7 +384,6 @@ jobs:
           mkdir ../bdsim-build
           cd ../bdsim-build
           export PATH=$PATH:/tmp/root/bin/
-          apt -y install libxxhash-dev libtbb-dev
           cmake ../bdsim
           make -j${{ steps.cpu-cores.outputs.count }}
 
@@ -423,7 +419,6 @@ jobs:
           mkdir ../bdsim-build
           cd ../bdsim-build
           export PATH=$PATH:/tmp/root/bin/
-          apt -y install libxxhash-dev libtbb-dev
           cmake ../bdsim
           make -j${{ steps.cpu-cores.outputs.count }}
 
@@ -688,6 +683,47 @@ jobs:
       - name: Get number of CPU cores
         uses: SimenB/github-actions-cpu-cores@v2
         id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/          
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+
+
+  bdsim_develop_mac_apple_g4_11_2:
+    # The type of runner that the job will run on
+    runs-on: macOS-14
+
+    steps:
+      - name: Install non-pip (brew) dependencies on MacOS
+        if: runner.os == 'macOS'
+        run: .github/bin/install-deps-macos.sh
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build Geant4
+        shell: bash
+        run: |
+          echo "Build Geant4"
 
       - name: Build bdsim
         shell: bash
