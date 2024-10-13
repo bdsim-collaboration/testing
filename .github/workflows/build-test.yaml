@@ -712,7 +712,9 @@ jobs:
     runs-on: macOS-14
 
     steps:
-      - name: Install non-pip (brew) dependencies on MacOS
+      - uses: actions/checkout@v4    
+
+      - name: Install brew dependencies on MacOS
         if: runner.os == 'macOS'
         run: .github/bin/install-deps-macos.sh
 
