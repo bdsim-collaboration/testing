@@ -722,7 +722,15 @@ jobs:
       - name: Build Geant4
         shell: bash
         run: |
-          echo "Build Geant4"
+          git clone https://gitlab.cern.ch/geant4/geant4.git 
+          cd geant4 
+          git checkout v11.2.2 
+          cd ../
+          mkdir geant4-build 
+          cd geant4-build 
+          cmake ../geant4 -DGEANT4_INSTALL_DATA=ON -DGEANT4_USE_GDML=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_SYSTEM_CLHEP=ON -DGEANT4_USE_RAYTRACER_X11=ON
+          make -j${{ steps.cpu-cores.outputs.count }} 
+          make install
 
       - name: Build BDSIM
         shell: bash
@@ -763,7 +771,15 @@ jobs:
       - name: Build Geant4
         shell: bash
         run: |
-          echo "Build Geant4"
+          git clone https://gitlab.cern.ch/geant4/geant4.git 
+          cd geant4 
+          git checkout v11.2.2 
+          cd ../
+          mkdir geant4-build 
+          cd geant4-build 
+          cmake ../geant4 -DGEANT4_INSTALL_DATA=ON -DGEANT4_USE_GDML=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_SYSTEM_CLHEP=ON -DGEANT4_USE_RAYTRACER_X11=ON
+          make -j${{ steps.cpu-cores.outputs.count }} 
+          make install
 
       - name: Build BDSIM
         shell: bash
