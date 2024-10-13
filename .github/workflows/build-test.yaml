@@ -11,6 +11,111 @@ on:
 
 jobs:
 
+  bdsim_develop_centos8_g4_10_7:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/centos8-g4.10.7
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          yum -y install gsl-devel
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+
+
+  bdsim_develop_centos8_g4_11_0:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/centos8-g4.11.0
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          yum -y install gsl-devel
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+
+
+  bdsim_develop_centos8_g4_11_1:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/centos8-g4.11.1
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          yum -y install gsl-devel
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+
+
   bdsim_develop_centos8_g4_11_2:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -42,6 +147,114 @@ jobs:
           export PATH=$PATH:/tmp/root/bin/
           source /usr/local/bin/geant4.sh
           ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+
+
+
+  bdsim_develop_alma9_g4_10_7:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/alma9-g4.11.0
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -j${{ steps.cpu-cores.outputs.count }}
+
+
+
+  bdsim_develop_alma9_g4_11_0:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/alma9-g4.11.0
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -j${{ steps.cpu-cores.outputs.count }}
+
+
+
+  bdsim_develop_alma9_g4_11_1:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/alma9-g4.11.1
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -j${{ steps.cpu-cores.outputs.count }}
+
 
 
   bdsim_develop_alma9_g4_11_2:
@@ -76,7 +289,117 @@ jobs:
           export PATH=$PATH:/tmp/root/bin/
           source /usr/local/bin/geant4.sh
           ctest -j${{ steps.cpu-cores.outputs.count }}
-#         ctest -R LaserWire -VV -j${{ steps.cpu-cores.outputs.count }}
+
+
+
+
+  bdsim_develop_ubuntu20_g4_10_7:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/ubuntu20-g4.10.7
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          apt -y install libxxhash-dev libtbb-dev
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          echo $0
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+  bdsim_develop_ubuntu20_g4_11_0:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/ubuntu20-g4.11.0
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          apt -y install libxxhash-dev libtbb-dev
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          echo $0
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+  bdsim_develop_ubuntu20_g4_11_1:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/ubuntu20-g4.11.1
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          apt -y install libxxhash-dev libtbb-dev
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          echo $0
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
 
   bdsim_develop_ubuntu20_g4_11_2:
     # The type of runner that the job will run on
@@ -114,6 +437,109 @@ jobs:
           ctest -v -j${{ steps.cpu-cores.outputs.count }}
 
 
+
+
+
+
+  bdsim_develop_ubuntu22_g4_10_7:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/ubuntu22-g4.10.7
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/          
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+  bdsim_develop_ubuntu22_g4_11_0:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/ubuntu22-g4.11.0
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/          
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+  bdsim_develop_ubuntu22_g4_11_1:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/ubuntu22-g4.11.1
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/          
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
   bdsim_develop_ubuntu22_g4_11_2:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -146,6 +572,109 @@ jobs:
           export PATH=$PATH:/tmp/root/bin/
           source /usr/local/bin/geant4.sh
           ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+  bdsim_develop_ubuntu24_g4_10_7:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/ubuntu24-g4.11.2
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/          
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+  bdsim_develop_ubuntu24_g4_11_0:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/ubuntu24-g4.11.0
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/          
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
+
+  bdsim_develop_ubuntu24_g4_11_1:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    container:
+      image: sboogert/ubuntu24-g4.11.1
+
+    steps:
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build bdsim
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/          
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test bdsim
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
 
   bdsim_develop_ubuntu24_g4_11_2:
     # The type of runner that the job will run on
