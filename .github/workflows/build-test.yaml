@@ -747,3 +747,44 @@ jobs:
           source /usr/local/bin/geant4.sh
           ctest -v -j${{ steps.cpu-cores.outputs.count }}
 
+
+  bdsim_develop_mac_intel_g4_11_2:
+    # The type of runner that the job will run on
+    runs-on: macOS-13
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install brew dependencies on MacOS
+        if: runner.os == 'macOS'
+        run: .github/bin/install-deps-macos.sh
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build Geant4
+        shell: bash
+        run: |
+          echo "Build Geant4"
+
+      - name: Build BDSIM
+        shell: bash
+        run: |   
+          git clone https://stewartboogert@bitbucket.org/jairhul/bdsim.git
+          cd bdsim
+          git checkout develop
+          mkdir ../bdsim-build
+          cd ../bdsim-build
+          export PATH=$PATH:/tmp/root/bin/          
+          cmake ../bdsim
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Test BDSIM
+        shell: bash
+        run: |
+          cd bdsim-build
+          export PATH=$PATH:/tmp/root/bin/
+          source /usr/local/bin/geant4.sh
+          ctest -v -j${{ steps.cpu-cores.outputs.count }}
+
